@@ -1,0 +1,34 @@
+
+
+<mat-form-field class="full-width">
+  <input matInput type="text"
+  [placeholder]="placeholder"
+  [matAutocomplete]="auto"
+  [formControl]="selectControl">
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-option *ngFor="let item of filteredData | async">
+    <div (click)="optionClicked($event, item)">
+      <mat-checkbox [checked]="item.selected"
+        (change)="toggleSelection(item)"
+        (click)="$event.stopPropagation()">
+        {{ item.CodeValue }}
+      </mat-checkbox>
+    </div>
+  </mat-option>
+</mat-autocomplete>
+
+<div class="chip-list-wrapper">
+  <mat-chip-list #chipList>
+    <ng-container *ngFor="let select of selectData">
+      <div (click)="removeChip(select)">
+        <span class="online">{{ select.CodeValue }}</span>
+        <!-- <mat-icon class="mat-chip-remove">취소</mat-icon> -->
+        <!-- <button class="cas_btn" (click)="removeSelection('Certification')">선택해제</button> -->
+      </div>
+
+    </ng-container>
+    <button *ngIf="selectData.length > 0" (click)="removeSelection()">선택해제</button>
+  </mat-chip-list>
+</div>
